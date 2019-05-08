@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+*{
+  padding :0;
+  margin :0 ;
+  box-sizing: border-box;
+}
+
+body{
+
+  padding :20px;
+  font-family: 'Ubuntu','Sans serif'
+
+
+}
+
+
+.header {
+  width : 100vh;
+  position : relative;
+  top: 10;
+  margin: 50px;
+  padding:10px;
+  text-align: center;
+  border : 0px solid black;
+  border-radius: 7px;
+  display:flex;
+  flex-direction: column;
+  background-image: linear-gradient(#7ed56f,#55c57a);
+
+}
+
+.card{
+  box-shadow: 3px 3px 12px 2px rgba(0,0,0,0.5);
+  transition : all 0.5s  ease-out;
+  margin: 20px;
+}
+
+.card:hover{
+  box-shadow: 3px 3px 12px 1px rgba(0,0,0,0.3);
+ }
+
+
+.wallet_details{
+  display:flex;
+  flex-direction:  column;
+  justify-content: space-between;
+}
+
+.wallet_details div{
+  margin:5px;
+  font-weight: 500;
+
+}
+
+
+.balance {
+  font-size: 35px;
+}
+
+
+.users {
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.ops{
+  display:flex;
+  justify-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+}
+
+.profileArea{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  padding: 10px;
+}
+
+.profile{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  text-align: center;
+
+}
+
+.mainProfile p{
+  margin: 5px;  
+
+}
+
+.ops__op{
+  font-size: 20px;
+}
+
+.btn{
+  margin:2px;
+  padding: 3px;
+  background-image: linear-gradient(#7ed56f,#55c57a);
+  color: black;
+  transition: all 0.5s ease;
+}
+
+.btn:hover{
+  color: rgb(2, 96, 124);
+  background-image: linear-gradient(#fff,#fff);
+}
+
+.mainProfile__balance{
+  margin: 10px;
+  font-size: 25px;
+  color:rgb(45, 104, 6);
+  font-weight: 600;
+}
+
+.mainProfile__name{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.profile_pic{
+  height: 50px;
+}

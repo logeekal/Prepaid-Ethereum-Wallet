@@ -1,0 +1,97 @@
+{
+    "memberProps" : {
+        "0" :{
+            "name" : "name",
+            "label" : "Name",
+            "updatable" :true,
+            "maxLength" : 50
+        },
+        "1" :{
+            "name":"address",
+            "label":"Member Address",
+            "updatable":false
+        },
+        "2" :{
+            "name":"balance",
+            "label":"Balance",
+            "updatable":false,
+            "unit":"ETH"
+        }
+
+
+    },
+    "operations" :{
+        "addMember" : {
+            "name" : "addMember",
+            "label" : "Add New Member",
+            "params" : {
+                "0" : {
+                    "name" : "name",
+                    "label":"Name of New Member",
+                    "type" : "text"
+                }
+            }
+
+        },
+        "sendFunds" : {
+            "name":"sendFunds",
+            "label": "Pay from Wallet.",
+            "params" : {
+                "0" : {
+                    "name" : "address",
+                    "label" : "Payee",
+                    "type"  :"text"
+                },
+                "1" :{
+                    "name": "amount",
+                    "label": "Amount(in Eth)",
+                    "type" : "text"
+                }
+            }
+        },
+        "allowAccessToWallet" : {
+            "name":"allowAccessToWallet",
+            "label": "Allow Access to Wallet",
+            "params" : {
+                "0" : {
+                    "name" : "address",
+                    "label" : "Member",
+                    "type" : "text"
+                }
+            }
+        },
+        "disAllowAccessToWallet" : {
+            "name":"disAllowAccessToWallet",
+            "label": "Disallow Access to Wallet",
+            "params" : {
+                "0" : {
+                    "name" : "address",
+                    "label" : "Member",
+                    "type" : "text"
+                }
+            }
+        },
+        "getBalance" :{
+            "name":"getBalance",
+            "label" : "Check Wallet Balance"
+        },
+        "killWallet" :{
+            "name" :  "killWallet",
+            "label" : "Destroy your Wallet"
+        },
+        "addFunds"  :{
+            "name" : "addFunds",
+            "label" : "Add Funds to Wallet.",
+            "params" :{
+                "0" :{
+                    "name": "amount",
+                    "label": "Amount(in Eth)",
+                    "type" : "text"
+                }
+
+            }
+        }
+
+
+    }
+}
