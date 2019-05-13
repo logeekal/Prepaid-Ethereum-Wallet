@@ -55,7 +55,7 @@ export class Operations extends React.Component{
         const contractCallback = (err, res) =>{
             console.log(`Solidity Callback ${operation}`);
             console.error(err);
-            if(res)alert(`Response is  ${res.toString()}`);
+            if(res){if(res.toString() !== 'true')alert(`Response is  ${res.toString()}`)};
             if(err){
                 alert(`Error is ${err.toString()}`);
                // throw err;
@@ -133,9 +133,9 @@ export class Operations extends React.Component{
                     break;
                 case "allowAccessToWallet":
                    let candidate = this.props.state.modal.params.address;
-                   debugger
+                   
                    this.props.state.contract.methods.allowAccessToWallet(candidate).send(sendParams,             contractCallback);
-                    debugger;
+                    
                     break;
                 case 'disAllowAccessToWallet':
                     candidate = this.props.state.modal.params.address;
@@ -153,7 +153,14 @@ export class Operations extends React.Component{
                     value:depositBalance,
                     gas:"900000",
                     gasPrice : "1" });     
-                    break;              
+                    break;
+                case 'getBalance':
+                    alert(`Operation GetBalance is not supported as of now.`);
+                    break;
+                    this.props.state.contract.methods.getBalance().send(sendParams)
+                        .on('transactionHash', (trans) => { alert(`In transaction has ${trans}`)})
+                        .on('confirmation', (conf,receipt) =>{ alert(`In receipt confirmation`); alert(conf); console.log(receipt);})
+                        .on('receipt',(receipt)=>{alert(`In receipt  {receipt}`)});
             }
         }catch(err){
                 
