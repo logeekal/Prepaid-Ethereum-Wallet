@@ -6,6 +6,16 @@
   box-sizing: border-box;
 }
 
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
 body{
 
   padding :20px;
@@ -15,7 +25,7 @@ body{
 }
 
 
-.header {
+/* .header {
   width : 100vh;
   position : relative;
   top: 10;
@@ -28,7 +38,7 @@ body{
   flex-direction: column;
   background-image: linear-gradient(#7ed56f,#55c57a);
 
-}
+} */
 
 .card{
   box-shadow: 3px 3px 12px 2px rgba(0,0,0,0.5);
@@ -127,3 +137,5 @@ body{
 .profile_pic{
   height: 50px;
 }
+
+

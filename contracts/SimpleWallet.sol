@@ -1,5 +1,67 @@
 pragma solidity ^0.5.0;
 
+
+/**
+ * 
+ * SimpleWalletFactory is a factory for creating wallets that user can use according to
+ * there own will.
+ * 
+ */
+
+contract SimpleWalletFactory{
+    
+    SimpleWallet wallet;
+    address appOwner ;
+    uint public balance;
+    
+    address payable private  walletAddress ;
+    
+    event GET_WALLET_DETAILS(address payable[] );
+    
+    event GET_CREATED_WALLET_ADDRESS(address payable);
+    
+    /**
+     * Mapping to easily fetch the list of Wallets a member is attached to
+     * @param   {key}   Key is the address of a member
+     * @param   {value} Value is the array of wallets a member is part of. 
+     * 
+     */
+    mapping(address=>address payable[] ) public walletDetails;
+    
+    
+    /**
+     * 
+     *  Mapping to keep the Key values pair to check if the user is 
+        member of a particular wallet.
+     *
+     */
+    
+    constructor() public{
+        appOwner = msg.sender;
+    }
+    
+    function() external payable{
+        balance = msg.value;
+    }
+    
+    
+    function deploySimpleWallet() public{
+        wallet =  new SimpleWallet();
+         walletAddress = address(wallet);
+        
+        // //Add message sender to the list
+        // walletDetails[msg.sender].push(walletAddress);
+        
+        emit GET_CREATED_WALLET_ADDRESS(walletAddress);
+    }
+    
+    function getUserWallets(address _userAddress) public{
+        require(msg.sender == _userAddress,'You can only see your wallet Details');
+        emit GET_WALLET_DETAILS(walletDetails[_userAddress]);
+    }
+    
+}
+
 contract SimpleWallet{
     
     
@@ -10,15 +72,17 @@ contract SimpleWallet{
         uint block;
     }
     
-    bool public withdrawalAllowed;
+    bool public withdrawalAllowed;   
     uint public balance;
     address payable public owner;
     
     WalletStatement[] public statement;
     
     constructor() public{
-        owner = msg.sender;
-        allowAccessToWallet(owner);
+       // owner = msg.sender;
+        owner = tx.origin;
+        //allowAccessToWallet(owner);
+        walletMembers[owner] = true;
     }
     
 

@@ -17,6 +17,10 @@ export class Operations extends React.Component{
         console.log(this.props);
     }
 
+    componentDidMount(){
+
+    }
+
     async handleOperation(e){
 
         //let modalState = {};

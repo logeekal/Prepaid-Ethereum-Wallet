@@ -1,0 +1,93 @@
+ 
+  .btn {
+    font-size: 70px;
+    font-weight: 600;
+    background: transparent;
+    border: transparent;
+    display: inline-block;
+    position: relative;
+    width: 12em;
+    cursor: pointer;
+  }
+  
+  .btn:hover .square {
+    width: 100%;
+  }
+  
+  .btn:hover .btn-text {
+    color: white;
+  }
+  
+  .btn:hover .arrow {
+    left: 1em;
+    background: white;
+  }
+  
+  .btn:hover .arrow::before {
+    animation: step-end;
+  }
+  
+  .square {
+    transition: all 0.4s cubic-bezier(1, 0.01, 0.18, 0.34);
+    background: black;
+    width: 2em;
+    height: 2em;
+    margin: 0px;
+    position: relative;
+  }
+  
+  .btn-text {
+    transition: all 0.4s cubic-bezier(1, 0.01, 0.18, 0.34);
+    text-transform: uppercase;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+    top: 0.4em;
+    left: 2em;
+    right: 0;
+    bottom: 0px;
+    margin: 0 0 0 20px;
+    letter-spacing: 0.1em;
+  }
+  
+  .arrow {
+    transition: all 0.4s cubic-bezier(1, 0.01, 0.18, 0.34);
+    width: 1em;
+    background: none;
+    height: 3px;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 0em;
+  }
+  
+  .arrow::before {
+    transition: all 0.4s cubic-bezier(1, 0.01, 0.18, 0.34);
+    position: absolute;
+    content: "";
+    transition: all 0.4s cubic-bezier(1, 0.01, 0.18, 0.34);
+    border-top: 0.2rem solid white;
+  
+    width: 2rem;
+    height: 2rem;
+    border-right: 0.2rem solid white;
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    padding: 0;
+    left: 0.7em;
+    top: 50%;
+    animation: blink 1s linear infinite;
+    animation-direction: alternate;
+  }
+  
+  @keyframes blink {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
