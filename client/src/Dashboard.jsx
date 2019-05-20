@@ -26,10 +26,14 @@ export class Dashboard extends React.Component {
     } ;
     this.operation = "getUserWallet";
 
-    this.props.state.contract.methods.getUserWallets(this.props.state.accounts[0]).send({from: this.props.state.accounts[0]},contractCallback);
+    //this.props.state.contract.methods.getUserWallets(this.props.state.accounts[0]).send({from: this.props.state.accounts[0]},contractCallback);
   }
 
+
   render() {
+
+
+
     return [
       <WalletDetails state={this.props.state} handleGlobalState={this.props.handleGlobalState} />
       ,

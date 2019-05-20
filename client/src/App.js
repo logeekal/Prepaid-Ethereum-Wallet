@@ -18,7 +18,7 @@ import {
   GET_CREATED_WALLET_ADDRESS_WALLET_FACTORY
 } from "./utils/constants.js";
 
-class App extends Component {
+export class App extends Component {
   state = {
     storageValue: 0,
     web3: null,
@@ -33,18 +33,29 @@ class App extends Component {
       "onScreenWallet": "",
       "pubKey": "",
       "wallets": {
-        "0": {
-          "pubKey": "",
-          "status": "",
-          "balance": ""
-        }
+      },
+      "transactions" :{
+
       }
     },
     requestState: {
       "status": "",
       "name": ""
+    },
+    tempUserDetails :{
+      "loggedIn": false,
+      "onScreenWallet": "",
+      "pubKey": "",
+      "wallets": {
+      },
+      "transactions" :{
+        "hash" : "",
+        "from" : "",
+        "status" : "",
+        "operation" : "",
+        "initiatedOn" : ""
+      }
     }
-
   };
   // state = store.getState();
 
@@ -91,63 +102,7 @@ class App extends Component {
         members: member,
       });
 
-      /***
-       * START
-       * Setting up Event Subscribption for the contracts.
-       */
-
-      const eventCallback = (error, event) => {
-        if (error) {
-          alert(`Error Occured : ${error.toString}`);
-        } else {
-          //Handle Events accordingly
-          let eventName = event.event;
-          alert(`Fired Event ${eventName}`);
-          console.log(event);
-          switch (eventName) {
-            case GET_WALLET_DETAILS_WALLET_FACTORY:
-              let walletList = event.returnValues["0"];
-              if (walletList.length === 0) {
-                alert(`You don't have any Wallet yet.`);
-              } else {
-                //Update the list of wallet.
-                // let wallets = {};
-                // debugger
-                // walletList["0"].map((wallet)=>{
-                //   wallets[wallet].pubKey = wallet;
-                //   wallets[wallet].status = false;
-                //   wallets[wallet].balance = 0;
-                // })
-
-                // this.handleGlobalState("wallets", {
-                //   ...this.state.userDetails.wallets,
-                //   wallets
-                // }).then();
-              }
-            case GET_CREATED_WALLET_ADDRESS_WALLET_FACTORY:
-              console.log(
-                `Fired Event ${GET_CREATED_WALLET_ADDRESS_WALLET_FACTORY} ${JSON.stringify(
-                  event
-                )}`
-              );
-          }
-        }
-      };
-
-      this.state.contract.events[GET_WALLET_DETAILS_WALLET_FACTORY](
-        { },
-        eventCallback
-      );
-
-      this.state.contract.events[GET_CREATED_WALLET_ADDRESS_WALLET_FACTORY](
-        { },
-        eventCallback
-      );
-      /***
-       * END
-       * Setting up Event Subscribption for the contracts.
-       */
-
+ 
       let walletAddress = await this.state.contract.address;
       console.log(`got the wallet address :  ${walletAddress}`);
       let walletBalance = this.state.web3.eth.utils.fromWei(
@@ -210,9 +165,7 @@ class App extends Component {
     });
   }
 
-  // shouldComponentUpdate(){
 
-  // }
 
   render() {
     console.log("Re-rendering");

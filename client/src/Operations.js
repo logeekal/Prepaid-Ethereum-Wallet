@@ -4,6 +4,8 @@ import * as meta from './contracts/state.json';
 import _ from 'lodash';
 import { Modal } from './components/Modal';
 import App from './App';
+import { executeContractOps } from './utils/WalletUtils';
+import { transactionCallback, receiptCallback, errorCallback } from './WalletDetails';
 
 
 export class Operations extends React.Component{
@@ -151,12 +153,14 @@ export class Operations extends React.Component{
                     break;
                 case "addFunds" :
                    let depositBalance = this.props.state.web3.utils.toWei(this.props.state.modal.params.amount,'ether');
-                   this.props.state.web3.eth.sendTransaction({
+                   let sendParams = {
                     from: this.props.address,
-                    to: this.props.state.contractFacts.address, 
+                    to: this.props.state.userDetails.onScreenWallet, 
                     value:depositBalance,
                     gas:"900000",
-                    gasPrice : "1" });     
+                    gasPrice : "1" };     
+                    await executeContractOps(this.props.state, 'addFunds',this.props.handleGlobalState
+                    ,sendParams,null, transactionCallback, receiptCallback,errorCallback);
                     break;
                 case 'getBalance':
                     alert(`Operation GetBalance is not supported as of now.`);

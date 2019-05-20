@@ -16,9 +16,9 @@ contract SimpleWalletFactory{
     
     address payable private  walletAddress ;
     
-    event GET_WALLET_DETAILS(address payable[] );
+    event GET_WALLET_DETAILS(address payable[] wallets);
     
-    event GET_CREATED_WALLET_ADDRESS(address payable);
+    event GET_CREATED_WALLET_ADDRESS(address payable createdWallet);
     
     /**
      * Mapping to easily fetch the list of Wallets a member is attached to
@@ -50,7 +50,7 @@ contract SimpleWalletFactory{
          walletAddress = address(wallet);
         
         // //Add message sender to the list
-        // walletDetails[msg.sender].push(walletAddress);
+        walletDetails[msg.sender].push(walletAddress);
         
         emit GET_CREATED_WALLET_ADDRESS(walletAddress);
     }
@@ -98,11 +98,13 @@ contract SimpleWallet{
     
     mapping(address => bool) walletMembers;
     
-    event deposit(address _sender, uint _amount);
+    event DEPOSIT(address _sender, uint _amount, uint _newBalance);
     
-    event withdrawal(address _sender, address _beneficiary, uint _amount);
+    event WITHDRAWAL(address _sender, address _beneficiary, uint _amount);
     
-    event transaction(address _trxAddress, uint _amount, string mode, uint blockNumber);
+    event TRANSACTION(address _trxAddress, uint _amount, string mode, uint blockNumber);
+    
+    event GET_OWNER(address _owner);
     
     /**
      * fallback function which always fires if only Transaction is being sent to the Wallet.
@@ -117,7 +119,7 @@ contract SimpleWallet{
         });
         
         statement.push(thisStatement);
-        emit deposit(msg.sender, msg.value);
+        emit DEPOSIT(msg.sender, msg.value ,balance);
     }
     
     
@@ -129,7 +131,7 @@ contract SimpleWallet{
         // require(walletMembers[msg.sender] = true);
         
         //only authorized user will be able to send the amount.
-        emit withdrawal(msg.sender, _receiver, _amount);
+        emit WITHDRAWAL(msg.sender, _receiver, _amount);
         
         _receiver.transfer(_amount);
         balance-= _amount;
@@ -174,9 +176,13 @@ contract SimpleWallet{
         selfdestruct(owner);
     }
     
+    function getOwner() public{
+        emit GET_OWNER(owner);
+    }
+    
     function getTransactions() public onlyOwner{
         for(uint counter=0; counter<statement.length; counter++){
-            emit transaction(statement[counter].trxAddress, statement[counter].amount,statement[counter].mode, statement[counter].block);
+            emit TRANSACTION(statement[counter].trxAddress, statement[counter].amount,statement[counter].mode, statement[counter].block);
         }
     }
     
