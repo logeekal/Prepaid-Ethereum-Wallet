@@ -85,34 +85,34 @@ export async function  handleEvents(state, handleGlobalState, events) {
         });
         break;
       case DEPOSIT_WALLET:
-        
+        debugger;
         console.log(`Fired Deposit Event`);
         let sender = events[DEPOSIT_WALLET].returnValues["_sender"];
-        let value = events[DEPOSIT_WALLET].returnValues["_amount"];
-        let balance = events[DEPOSIT_WALLET].returnValues["_newBalance"];
+        let value = state.web3.utils.fromWei(state.web3.utils.toBN(events[DEPOSIT_WALLET].returnValues["_amount"],"ether"));
+        let balance = state.web3.utils.fromWei(state.web3.utils.toBN(events[DEPOSIT_WALLET].returnValues["_newBalance"],"ether"));
 
         //update the balance of wallet
         wallets = state.userDetails.wallets;
-        wallets[events.to].balance = balance;
+        wallets[events[DEPOSIT_WALLET].address].balance = balance;
         
         handleGlobalState("userDetails",{
           ...state.userDetails,
-          "wallets" : state.web3.utils.fromWei(balance,'ether')
+          "wallets" : wallets
         });
 
-        //update the balance of sender 
-        if(sender === state.userDetails.pubKey){
-          state.web3.eth.getBalance(sender).then((returnedBal)=>{
-            balance =  returnedBal;
-          });
-        }
-        wallets = state.userDetails.wallets;
-        wallets[events.to].balance = balance;
+        // //update the balance of sender 
+        // if(sender === state.userDetails.pubKey){
+        //   state.web3.eth.getBalance(sender).then((returnedBal)=>{
+        //     balance =  returnedBal;
+        //   });
+        // }
+        // let members = state.members;
+        // wallets[sender].balance = balance;
         
-        handleGlobalState("userDetails",{
-          ...state.userDetails,
-          "wallets" : state.web3.utils.fromWei(balance,'ether')
-        });
+        // handleGlobalState("userDetails",{
+        //   ...state.userDetails,
+        //   "wallets" : 
+        // });
         
     }
   });

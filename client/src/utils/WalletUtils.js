@@ -1,5 +1,6 @@
 import Web3 from "web3";
 import SimpleWallet from "../contracts/SimpleWallet.json";
+import { DEPOSIT_WALLET } from "./constants.js";
 
 const contractCallback = (err, res) => {
   console.log(`Solidity Callback Utils`);
@@ -32,8 +33,10 @@ export const executeContractOps = (
     state.userDetails.onScreenWallet
   );
   debugger;
-  let eventCallback = (error, event) => { alert(event); console.log(event); console.log(error)};
+  let eventCallback = (error, event) => { console.log(event); console.log(error)};
   deployedContract.events.allEvents({fromBlock:0}, eventCallback);
+  console.log(`Depoloyed Contract`);
+  console.log(deployedContract);
   switch (operation) {
     case "deployWallet":
       state.contract.methods
@@ -82,13 +85,13 @@ export const executeContractOps = (
        * @params {address} Address to which data needs to
        */
       debugger
-      
-
       let depositBalance = state.web3.utils.toWei(state.modal.params.amount,'ether');
-      state.web3.eth.sendTransaction(sendParams).on("transactionHash", transactionHash => {
+      
+      //state.web3.eth.sendTransaction(sendParams)
+      deployedContract.methods.deposit().send(sendParams)
+      .on("transactionHash", transactionHash => {
         transactionCallback(handleGlobalState,state,transactionHash, operation);
       }).on("confirmation", (confirmationNumber, receipt) => {
-        console.log(receipt);
         if (confirmationNumber == 24) {
           console.log(`${operation} transaction Confirmed.`);
         }

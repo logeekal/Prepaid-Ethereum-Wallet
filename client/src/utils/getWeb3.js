@@ -5,8 +5,17 @@ const getWeb3 = () =>
     // Wait for loading completion to avoid race conditions with web3 injection timing.
     window.addEventListener("load", async () => {
       // Modern dapp browsers...
-      if (!window.ethereum) {
-        const web3 = new Web3(window.ethereum);
+      if (window.ethereum !== undefined) {
+        const provider = new Web3.providers.WebsocketProvider('ws://127.0.0.1:8545');
+        let web3 = new Web3(provider);
+        console.log("No web3 instance injected, using Local web3.");
+        resolve(web3);
+        return;
+
+
+
+
+         web3 = new Web3(window.ethereum);
         try {
           // Request account access if needed
           await window.ethereum.enable();

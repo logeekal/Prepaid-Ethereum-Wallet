@@ -14,7 +14,7 @@ contract SimpleWalletFactory{
     address appOwner ;
     uint public balance;
     
-    address payable private  walletAddress ;
+    address payable private   walletAddress ;
     
     event GET_WALLET_DETAILS(address payable[] wallets);
     
@@ -47,7 +47,7 @@ contract SimpleWalletFactory{
     
     function deploySimpleWallet() public{
         wallet =  new SimpleWallet();
-         walletAddress = address(wallet);
+        walletAddress = address(uint160(address(wallet)));
         
         // //Add message sender to the list
         walletDetails[msg.sender].push(walletAddress);
@@ -108,8 +108,26 @@ contract SimpleWallet{
     
     /**
      * fallback function which always fires if only Transaction is being sent to the Wallet.
+
+     Commmented out fallback function because :
+     a. fallback function should mostly accept ethers ONLY asSendTransaction is not sent with lot of gas.
+     b. The event it was emitting does not appear in SendTransaction logs. Only topic appear and i don't 
+        know yet, how to implement topics.
      */
-    function() external payable{
+    // function() external payable{
+    //     balance+=msg.value;
+    //     WalletStatement memory thisStatement = WalletStatement({
+    //         trxAddress : msg.sender,
+    //         amount: msg.value,
+    //         mode:'Deposit',
+    //         block : block.number
+    //     });
+        
+    //     statement.push(thisStatement);
+    //     emit DEPOSIT(msg.sender, msg.value ,balance);
+    // }
+
+    function deposit() external payable {
         balance+=msg.value;
         WalletStatement memory thisStatement = WalletStatement({
             trxAddress : msg.sender,

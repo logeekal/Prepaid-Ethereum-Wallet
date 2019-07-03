@@ -119,6 +119,7 @@ export class App extends Component {
         pubKey : this.state.accounts[0]
 
       } });
+
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(

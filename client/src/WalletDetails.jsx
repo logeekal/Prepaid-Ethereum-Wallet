@@ -40,7 +40,8 @@ export const transactionCallback = (handleGlobalState,state,transactionHash, ope
 };
 
 export const receiptCallback = (state, handleGlobalState, operation, receipt) => {
-  // console.log(`in receiptCallback : ${this.props.state}`);
+  debugger
+  console.log(`in receiptCallback`);
   console.log(receipt);
 
   //update transactions :
